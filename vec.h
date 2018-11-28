@@ -44,7 +44,7 @@ typedef double f64;
             (a)->data = realloc((a)->data, n*sizeof((a)->data[0]));\
             (a)->capacity = n;\
         }\
-        (a)->size = n;\
+        (a)->length = n;\
     } while (0)
 
 
@@ -69,7 +69,7 @@ typedef double f64;
         {\
             (a)->capacity = !(a)->capacity ? 1 : (a)->capacity << 1;\
         }\
-        if ((a)->capacity > capacity0)\
+        if ((a)->capacity != capacity0)\
         {\
             (a)->data = realloc((a)->data, (a)->capacity*sizeof((a)->data[0]));\
         }\

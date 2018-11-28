@@ -26,6 +26,13 @@ static void test(void)
     {
         assert(a.data[i] == i);
     }
+    vec_resize(&a, 0);
+    assert(0 == a.length);
+    assert(128 == a.capacity);
+    int arr[] = { 1, 2, 3, 4, 5 };
+    vec_pusharr(&a, arr, ARYLEN(arr));
+    assert(5 == a.length);
+    assert(128 == a.capacity);
     vec_free(&a);
 }
 
