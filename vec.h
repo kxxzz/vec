@@ -37,6 +37,16 @@ typedef double f64;
     qsort((a)->data, (a)->length, sizeof(*(a)->data), fn)
 
 
+#define vec_reserve(a, n)\
+    do {\
+        if (n > (a)->capacity)\
+        {\
+            (a)->data = realloc((a)->data, n*sizeof((a)->data[0]));\
+            (a)->capacity = n;\
+        }\
+    } while (0)
+
+
 #define vec_resize(a, n)\
     do {\
         if (n > (a)->capacity)\
