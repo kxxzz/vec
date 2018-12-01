@@ -13,6 +13,14 @@
 
 
 
+#ifdef ARYLEN
+# undef ARYLEN
+#endif
+#define ARYLEN(a) (sizeof(a) / sizeof((a)[0]))
+
+
+
+
 static void test(void)
 {
     vec_t(int) a = { 0 };
