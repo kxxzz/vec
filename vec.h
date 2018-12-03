@@ -106,8 +106,19 @@ void vec_realloc_(void** pBuf, u32 size);
 
 
 
-
-
+#define vec_insert(a, p, e)\
+    do {\
+        u32 esize = sizeof((a)->data[0]);\
+        if ((a)->length + 1 > (a)->capacity)\
+        {\
+            int n = !(a)->capacity ? 1 : (a)->capacity << 1;\
+            vec_realloc_((void**)&(a)->data, n*esize);\
+            (a)->capacity = n;\
+        }\
+        memmove((a)->data + ((p) + 1), (a)->data + (p), ((a)->length - (p)) * esize);\
+        (a)->data[(p)] = (e);\
+        ++(a)->length;\
+    } while (0)
 
 
 
