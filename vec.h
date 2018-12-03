@@ -22,6 +22,8 @@ typedef double f64;
 
 
 
+void vec_realloc_(void** pBuf, u32 size);
+
 
 #define vec_t(T) struct { T* data; u32 length, capacity; }
 
@@ -38,7 +40,7 @@ typedef double f64;
     do {\
         if (n > (a)->capacity)\
         {\
-            (a)->data = realloc((a)->data, n*sizeof((a)->data[0]));\
+            vec_realloc_((void**)&(a)->data, n*sizeof((a)->data[0]));\
             (a)->capacity = n;\
         }\
     } while (0)
@@ -48,7 +50,7 @@ typedef double f64;
     do {\
         if (n > (a)->capacity)\
         {\
-            (a)->data = realloc((a)->data, n*sizeof((a)->data[0]));\
+            vec_realloc_((void**)&(a)->data, n*sizeof((a)->data[0]));\
             (a)->capacity = n;\
         }\
         (a)->length = n;\
@@ -60,7 +62,7 @@ typedef double f64;
         if ((a)->length + 1 > (a)->capacity)\
         {\
             int n = !(a)->capacity ? 1 : (a)->capacity << 1;\
-            (a)->data = realloc((a)->data, n*sizeof((a)->data[0]));\
+            vec_realloc_((void**)&(a)->data, n*sizeof((a)->data[0]));\
             (a)->capacity = n;\
         }\
         (a)->data[(a)->length] = (e);\
@@ -73,7 +75,7 @@ typedef double f64;
         if ((b)->length > (a)->capacity)\
         {\
             (a)->capacity = (b)->length;\
-            (a)->data = realloc((a)->data, (a)->capacity*sizeof((a)->data[0]));\
+            vec_realloc_((void**)&(a)->data, (a)->capacity*sizeof((a)->data[0]));\
         }\
         memcpy((a)->data, (b)->data, (b)->length*sizeof((a)->data[0]));\
         (a)->length = (b)->length;\
@@ -90,7 +92,7 @@ typedef double f64;
         }\
         if ((a)->capacity != capacity0)\
         {\
-            (a)->data = realloc((a)->data, (a)->capacity*sizeof((a)->data[0]));\
+            vec_realloc_((void**)&(a)->data, (a)->capacity*sizeof((a)->data[0]));\
         }\
         for (u32 i = 0; i < c; ++i)\
         {\
