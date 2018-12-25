@@ -126,7 +126,20 @@ void vec_realloc_(void** pBuf, u32 size);
 
 
 
+typedef vec_t(s8) vec_s8;
+typedef vec_t(s16) vec_s16;
+typedef vec_t(s32) vec_s32;
+typedef vec_t(s64) vec_s64;
+typedef vec_t(u8) vec_u8;
+typedef vec_t(u16) vec_u16;
+typedef vec_t(u32) vec_u32;
+typedef vec_t(u64) vec_u64;
 
+typedef vec_t(f32) vec_f32;
+typedef vec_t(f64) vec_f64;
+
+typedef vec_t(char) vec_char;
+typedef vec_t(void*) vec_ptr;
 
 
 
