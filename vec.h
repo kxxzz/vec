@@ -75,7 +75,7 @@ void vec_realloc_(void** pBuf, u32 size);
 
 
 #define vec_last(a)\
-    ((a)->data[(a)->length - 1])
+    (a)->data[(a)->length - 1]
 
 
 #define vec_dup(a, b)\
