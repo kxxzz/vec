@@ -74,6 +74,10 @@ void vec_realloc_(void** pBuf, u32 size);
     vec_resize((a), (a)->length - 1)
 
 
+#define vec_last(a)\
+    ((a)->data[(a)->length - 1])
+
+
 #define vec_dup(a, b)\
     do {\
         if ((b)->length > (a)->capacity)\
