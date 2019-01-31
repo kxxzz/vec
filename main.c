@@ -41,6 +41,14 @@ static void test(void)
     vec_pusharr(&a, arr, ARYLEN(arr));
     assert(5 == a.length);
     assert(128 == a.capacity);
+    int arr1[] = { 11, 22, 33 };
+    vec_insertarr(&a, 0, arr1, ARYLEN(arr1));
+    assert(8 == a.length);
+    assert(11 == a.data[0]);
+    assert(22 == a.data[1]);
+    assert(33 == a.data[2]);
+    assert(1 == a.data[3]);
+    assert(5 == a.data[7]);
     vec_free(&a);
 }
 

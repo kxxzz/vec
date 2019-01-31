@@ -92,20 +92,19 @@ void vec_realloc_(void** pBuf, u32 size);
 
 #define vec_pusharr(a, arr, count)\
     do {\
+        u32 esize = sizeof((a)->data[0]);\
         u32 c = (count);\
         u32 capacity0 = (a)->capacity;\
         while ((a)->length + c > (a)->capacity)\
         {\
-            (a)->capacity = !(a)->capacity ? 1 : (a)->capacity << 1;\
+            u32 n = !(a)->capacity ? 1 : (a)->capacity << 1;\
+            (a)->capacity = n;\
         }\
         if ((a)->capacity != capacity0)\
         {\
-            vec_realloc_((void**)&(a)->data, (a)->capacity*sizeof((a)->data[0]));\
+            vec_realloc_((void**)&(a)->data, (a)->capacity*esize);\
         }\
-        for (u32 i = 0; i < c; ++i)\
-        {\
-            (a)->data[(a)->length + i] = (arr)[i];\
-        }\
+        memcpy((a)->data + (a)->length, (arr), c*esize);\
         (a)->length += c;\
     } while (0)
 
@@ -119,13 +118,34 @@ void vec_realloc_(void** pBuf, u32 size);
         u32 esize = sizeof((a)->data[0]);\
         if ((a)->length + 1 > (a)->capacity)\
         {\
-            int n = !(a)->capacity ? 1 : (a)->capacity << 1;\
+            u32 n = !(a)->capacity ? 1 : (a)->capacity << 1;\
             vec_realloc_((void**)&(a)->data, n*esize);\
             (a)->capacity = n;\
         }\
         memmove((a)->data + ((p) + 1), (a)->data + (p), ((a)->length - (p)) * esize);\
         (a)->data[(p)] = (e);\
         ++(a)->length;\
+    } while (0)
+
+
+
+#define vec_insertarr(a, p, arr, count)\
+    do {\
+        u32 esize = sizeof((a)->data[0]);\
+        u32 c = (count);\
+        u32 capacity0 = (a)->capacity;\
+        while ((a)->length + c > (a)->capacity)\
+        {\
+            u32 n = !(a)->capacity ? 1 : (a)->capacity << 1;\
+            (a)->capacity = n;\
+        }\
+        if ((a)->capacity != capacity0)\
+        {\
+            vec_realloc_((void**)&(a)->data, (a)->capacity*esize);\
+        }\
+        memmove((a)->data + ((p) + c), (a)->data + (p), ((a)->length - (p)) * esize);\
+        memcpy((a)->data + (p), (arr), c*esize);\
+        (a)->length += c;\
     } while (0)
 
 
