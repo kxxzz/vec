@@ -151,6 +151,24 @@ void vec_realloc_(void** pBuf, u32 size);
 
 
 
+#define vec_shrink_to_fit(a)\
+    do {\
+        u32 n = (a)->length;\
+        if (n > 0)\
+        {\
+            vec_realloc_((void**)&(a)->data, n*sizeof((a)->data[0]));\
+        }\
+        else\
+        {\
+            free((a)->data);\
+            (a)->data = NULL;\
+        }\
+        (a)->capacity = n;\
+    } while (0)
+
+
+
+
 
 
 
