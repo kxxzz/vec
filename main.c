@@ -50,6 +50,9 @@ static void test(void)
     assert(1 == a.data[3]);
     assert(5 == a.data[7]);
     vec_free(&a);
+    printf("%u\n", a.capacity);
+    vec_shrink_to_fit(&a);
+    printf("%u\n", a.capacity);
 }
 
 
