@@ -80,7 +80,7 @@ void vec_shrink_to_fit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize)
 
 
 #define vec_pusharr(a, arr, count)\
-    vec_pusharr_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), arr, count)
+    vec_pusharr_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (arr), (count))
 
 
 #define vec_concat(a, b) vec_pusharr((a), (b)->data, (b)->length)
@@ -88,14 +88,14 @@ void vec_shrink_to_fit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize)
 
 #define vec_insert(a, p, e)\
     do {\
-        vec_insert_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), p); \
+        vec_insert_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (p)); \
         (a)->data[(p)] = (e);\
     } while (0)
 
 
 
 #define vec_insertarr(a, p, arr, count)\
-    vec_insertarr_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), p, arr, count)
+    vec_insertarr_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (p), (arr), (count))
 
 
 
