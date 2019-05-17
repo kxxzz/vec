@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <malloc.h>
 #include <string.h>
+#include <stdlib.h>
 
 
 typedef unsigned char u8;
