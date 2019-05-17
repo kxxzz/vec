@@ -72,7 +72,7 @@ static int mainReturn(int r)
 
 int main(int argc, char* argv[])
 {
-    for (u32 i = 0; i < 1024; ++i)
+    for (u32 i = 0; i < 1024*64; ++i)
     {
         test();
     }

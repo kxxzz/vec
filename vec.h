@@ -23,7 +23,20 @@ typedef double f64;
 
 
 
+
+
 void vec_realloc_(void** pBuf, u32 size);
+void vec_sort_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, int(*fn)(const void*, const void*));
+void vec_reserve_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, u32 n);
+void vec_resize_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, u32 n);
+void vec_push_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize);
+void vec_dup_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, const void* srcData, u32 srcLength);
+void vec_pusharr_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, const void* srcData, u32 srcLength);
+void vec_insert_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, u32 p);
+void vec_insertarr_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, u32 p, const void* srcData, u32 srcLength);
+void vec_shrink_to_fit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize);
+
+
 
 
 #define vec_t(T) struct { T* data; u32 length, capacity; }
@@ -34,40 +47,21 @@ void vec_realloc_(void** pBuf, u32 size);
 
 
 #define vec_sort(a, fn)\
-    qsort((a)->data, (a)->length, sizeof(*(a)->data), (fn))
+    vec_sort_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (fn))
 
 
 #define vec_reserve(a, n)\
-    do {\
-        if ((n) > (a)->capacity)\
-        {\
-            vec_realloc_((void**)&(a)->data, (n)*sizeof((a)->data[0]));\
-            (a)->capacity = (n);\
-        }\
-    } while (0)
+    vec_reserve_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (n))
 
 
 #define vec_resize(a, n)\
-    do {\
-        if ((n) > (a)->capacity)\
-        {\
-            vec_realloc_((void**)&(a)->data, (n)*sizeof((a)->data[0]));\
-            (a)->capacity = (n);\
-        }\
-        (a)->length = (n);\
-    } while (0)
+    vec_resize_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (n))
 
 
 #define vec_push(a, e)\
     do {\
-        if ((a)->length + 1 > (a)->capacity)\
-        {\
-            int n = !(a)->capacity ? 1 : (a)->capacity << 1;\
-            vec_realloc_((void**)&(a)->data, n*sizeof((a)->data[0]));\
-            (a)->capacity = n;\
-        }\
-        (a)->data[(a)->length] = (e);\
-        ++(a)->length;\
+        vec_push_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data));\
+        (a)->data[(a)->length - 1] = (e);\
     } while (0)
 
 
@@ -80,92 +74,31 @@ void vec_realloc_(void** pBuf, u32 size);
 
 
 #define vec_dup(a, b)\
-    do {\
-        if ((b)->length > (a)->capacity)\
-        {\
-            (a)->capacity = (b)->length;\
-            vec_realloc_((void**)&(a)->data, (a)->capacity*sizeof((a)->data[0]));\
-        }\
-        memcpy((a)->data, (b)->data, (b)->length*sizeof((a)->data[0]));\
-        (a)->length = (b)->length;\
-    } while (0)
+    vec_dup_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (b)->data, (b)->length)
 
 
 #define vec_pusharr(a, arr, count)\
-    do {\
-        u32 esize = sizeof((a)->data[0]);\
-        u32 c = (count);\
-        u32 capacity0 = (a)->capacity;\
-        while ((a)->length + c > (a)->capacity)\
-        {\
-            u32 n = !(a)->capacity ? 1 : (a)->capacity << 1;\
-            (a)->capacity = n;\
-        }\
-        if ((a)->capacity != capacity0)\
-        {\
-            vec_realloc_((void**)&(a)->data, (a)->capacity*esize);\
-        }\
-        memcpy((a)->data + (a)->length, (arr), c*esize);\
-        (a)->length += c;\
-    } while (0)
+    vec_pusharr_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), arr, count)
 
 
 #define vec_concat(a, b) vec_pusharr((a), (b)->data, (b)->length)
 
 
-
 #define vec_insert(a, p, e)\
     do {\
-        u32 esize = sizeof((a)->data[0]);\
-        if ((a)->length + 1 > (a)->capacity)\
-        {\
-            u32 n = !(a)->capacity ? 1 : (a)->capacity << 1;\
-            vec_realloc_((void**)&(a)->data, n*esize);\
-            (a)->capacity = n;\
-        }\
-        memmove((a)->data + ((p) + 1), (a)->data + (p), ((a)->length - (p)) * esize);\
+        vec_insert_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), p); \
         (a)->data[(p)] = (e);\
-        ++(a)->length;\
     } while (0)
 
 
 
 #define vec_insertarr(a, p, arr, count)\
-    do {\
-        u32 esize = sizeof((a)->data[0]);\
-        u32 c = (count);\
-        u32 capacity0 = (a)->capacity;\
-        while ((a)->length + c > (a)->capacity)\
-        {\
-            u32 n = !(a)->capacity ? 1 : (a)->capacity << 1;\
-            (a)->capacity = n;\
-        }\
-        if ((a)->capacity != capacity0)\
-        {\
-            vec_realloc_((void**)&(a)->data, (a)->capacity*esize);\
-        }\
-        memmove((a)->data + ((p) + c), (a)->data + (p), ((a)->length - (p)) * esize);\
-        memcpy((a)->data + (p), (arr), c*esize);\
-        (a)->length += c;\
-    } while (0)
-
+    vec_insertarr_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), p, arr, count)
 
 
 
 #define vec_shrink_to_fit(a)\
-    do {\
-        u32 n = (a)->length;\
-        if (n > 0)\
-        {\
-            vec_realloc_((void**)&(a)->data, n*sizeof((a)->data[0]));\
-        }\
-        else\
-        {\
-            free((a)->data);\
-            (a)->data = NULL;\
-        }\
-        (a)->capacity = n;\
-    } while (0)
+    vec_shrink_to_fit_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data))
 
 
 

@@ -50,7 +50,7 @@ void vec_push_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize)
         vec_realloc_(pData, n * elmSize);
         *pCapacity = n;
     }
-    ++pLength;
+    ++*pLength;
 }
 
 
