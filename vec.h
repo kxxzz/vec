@@ -41,7 +41,7 @@ void vec_realloc_(void** pBuf, u32 size);
         u32 n = (_n);\
         if (n > (a)->capacity)\
         {\
-            vec_realloc_((void**)&((a)->data), n*sizeof((a)->data[0]));\
+            vec_realloc_((void**)&(a)->data, n*sizeof((a)->data[0]));\
             (a)->capacity = n;\
         }\
     } while (0)
@@ -52,7 +52,7 @@ void vec_realloc_(void** pBuf, u32 size);
         u32 n = (_n);\
         if (n > (a)->capacity)\
         {\
-            vec_realloc_((void**)&((a)->data), n*sizeof((a)->data[0]));\
+            vec_realloc_((void**)&(a)->data, n*sizeof((a)->data[0]));\
             (a)->capacity = n;\
         }\
         (a)->length = n;\
@@ -64,7 +64,7 @@ void vec_realloc_(void** pBuf, u32 size);
         if ((a)->length + 1 > (a)->capacity)\
         {\
             int n = !(a)->capacity ? 1 : (a)->capacity << 1;\
-            vec_realloc_((void**)&((a)->data), n*sizeof((a)->data[0]));\
+            vec_realloc_((void**)&(a)->data, n*sizeof((a)->data[0]));\
             (a)->capacity = n;\
         }\
         (a)->data[(a)->length] = (e);\
@@ -85,7 +85,7 @@ void vec_realloc_(void** pBuf, u32 size);
         if ((b)->length > (a)->capacity)\
         {\
             (a)->capacity = (b)->length;\
-            vec_realloc_((void**)&((a)->data), (a)->capacity*sizeof((a)->data[0]));\
+            vec_realloc_((void**)&(a)->data, (a)->capacity*sizeof((a)->data[0]));\
         }\
         memcpy((a)->data, (b)->data, (b)->length*sizeof((a)->data[0]));\
         (a)->length = (b)->length;\
@@ -104,7 +104,7 @@ void vec_realloc_(void** pBuf, u32 size);
         }\
         if ((a)->capacity != capacity0)\
         {\
-            vec_realloc_((void**)&((a)->data), (a)->capacity*esize);\
+            vec_realloc_((void**)&(a)->data, (a)->capacity*esize);\
         }\
         memcpy((a)->data + (a)->length, (arr), c*esize);\
         (a)->length += c;\
@@ -121,7 +121,7 @@ void vec_realloc_(void** pBuf, u32 size);
         if ((a)->length + 1 > (a)->capacity)\
         {\
             u32 n = !(a)->capacity ? 1 : (a)->capacity << 1;\
-            vec_realloc_((void**)&((a)->data), n*esize);\
+            vec_realloc_((void**)&(a)->data, n*esize);\
             (a)->capacity = n;\
         }\
         memmove((a)->data + ((p) + 1), (a)->data + (p), ((a)->length - (p)) * esize);\
@@ -143,7 +143,7 @@ void vec_realloc_(void** pBuf, u32 size);
         }\
         if ((a)->capacity != capacity0)\
         {\
-            vec_realloc_((void**)&((a)->data), (a)->capacity*esize);\
+            vec_realloc_((void**)&(a)->data, (a)->capacity*esize);\
         }\
         memmove((a)->data + ((p) + c), (a)->data + (p), ((a)->length - (p)) * esize);\
         memcpy((a)->data + (p), (arr), c*esize);\
@@ -158,7 +158,7 @@ void vec_realloc_(void** pBuf, u32 size);
         u32 n = (a)->length;\
         if (n > 0)\
         {\
-            vec_realloc_((void**)&((a)->data), n*sizeof((a)->data[0]));\
+            vec_realloc_((void**)&(a)->data, n*sizeof((a)->data[0]));\
         }\
         else\
         {\

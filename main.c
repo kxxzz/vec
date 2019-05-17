@@ -24,6 +24,7 @@
 static void test(void)
 {
     vec_t(int) a = { 0 };
+
     for (int i = 0; i < 100; ++i)
     {
         vec_push(&a, i);
@@ -49,10 +50,11 @@ static void test(void)
     assert(33 == a.data[2]);
     assert(1 == a.data[3]);
     assert(5 == a.data[7]);
-    vec_free(&a);
-    printf("%u\n", a.capacity);
+    assert(128 == a.capacity);
     vec_shrink_to_fit(&a);
-    printf("%u\n", a.capacity);
+    assert(8 == a.capacity);
+
+    vec_free(&a);
 }
 
 
@@ -70,7 +72,10 @@ static int mainReturn(int r)
 
 int main(int argc, char* argv[])
 {
-    test();
+    for (u32 i = 0; i < 1024; ++i)
+    {
+        test();
+    }
     mainReturn(0);
 }
 
