@@ -1,11 +1,13 @@
 #pragma once
 
 
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <malloc.h>
 #include <string.h>
 #include <stdlib.h>
+
 
 
 typedef unsigned char u8;
@@ -47,20 +49,20 @@ void vec_shrink_to_fit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize)
 
 
 #define vec_sort(a, fn)\
-    vec_sort_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (fn))
+    vec_sort_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (fn))
 
 
 #define vec_reserve(a, n)\
-    vec_reserve_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (n))
+    vec_reserve_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (n))
 
 
 #define vec_resize(a, n)\
-    vec_resize_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (n))
+    vec_resize_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (n))
 
 
 #define vec_push(a, e)\
     do {\
-        vec_push_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data));\
+        vec_push_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data));\
         (a)->data[(a)->length - 1] = (e);\
     } while (0)
 
@@ -74,11 +76,11 @@ void vec_shrink_to_fit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize)
 
 
 #define vec_dup(a, b)\
-    vec_dup_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (b)->data, (b)->length)
+    vec_dup_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (b)->data, (b)->length)
 
 
 #define vec_pusharr(a, arr, count)\
-    vec_pusharr_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), arr, count)
+    vec_pusharr_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), arr, count)
 
 
 #define vec_concat(a, b) vec_pusharr((a), (b)->data, (b)->length)
@@ -86,19 +88,19 @@ void vec_shrink_to_fit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize)
 
 #define vec_insert(a, p, e)\
     do {\
-        vec_insert_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), p); \
+        vec_insert_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), p); \
         (a)->data[(p)] = (e);\
     } while (0)
 
 
 
 #define vec_insertarr(a, p, arr, count)\
-    vec_insertarr_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), p, arr, count)
+    vec_insertarr_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), p, arr, count)
 
 
 
 #define vec_shrink_to_fit(a)\
-    vec_shrink_to_fit_(&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data))
+    vec_shrink_to_fit_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data))
 
 
 
