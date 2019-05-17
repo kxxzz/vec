@@ -36,26 +36,24 @@ void vec_realloc_(void** pBuf, u32 size);
     qsort((a)->data, (a)->length, sizeof(*(a)->data), (fn))
 
 
-#define vec_reserve(a, _n)\
+#define vec_reserve(a, n)\
     do {\
-        u32 n = (_n);\
-        if (n > (a)->capacity)\
+        if ((n) > (a)->capacity)\
         {\
-            vec_realloc_((void**)&(a)->data, n*sizeof((a)->data[0]));\
-            (a)->capacity = n;\
+            vec_realloc_((void**)&(a)->data, (n)*sizeof((a)->data[0]));\
+            (a)->capacity = (n);\
         }\
     } while (0)
 
 
-#define vec_resize(a, _n)\
+#define vec_resize(a, n)\
     do {\
-        u32 n = (_n);\
-        if (n > (a)->capacity)\
+        if ((n) > (a)->capacity)\
         {\
-            vec_realloc_((void**)&(a)->data, n*sizeof((a)->data[0]));\
-            (a)->capacity = n;\
+            vec_realloc_((void**)&(a)->data, (n)*sizeof((a)->data[0]));\
+            (a)->capacity = (n);\
         }\
-        (a)->length = n;\
+        (a)->length = (n);\
     } while (0)
 
 
