@@ -48,6 +48,10 @@ void vec_shrink_to_fit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize)
 #define vec_clear(a) ((a)->length = 0)
 
 
+#define vec_setzero(a)\
+    memset((a)->data, 0, (a)->length * sizeof((a)->data[0]))
+
+
 #define vec_sort(a, fn)\
     vec_sort_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (fn))
 
