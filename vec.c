@@ -121,7 +121,7 @@ void vec_insertarr_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, u32
 
 
 
-void vec_shrink_to_fit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize)
+void vec_shrinkToFit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize)
 {
     if (*pLength > 0)
     {

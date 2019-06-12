@@ -51,7 +51,7 @@ static void test(void)
     assert(1 == a.data[3]);
     assert(5 == a.data[7]);
     assert(128 == a.capacity);
-    vec_shrink_to_fit(&a);
+    vec_shrinkToFit(&a);
     assert(8 == a.capacity);
 
     vec_free(&a);

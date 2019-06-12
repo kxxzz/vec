@@ -36,7 +36,7 @@ void vec_dup_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, const voi
 void vec_pusharr_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, const void* srcData, u32 srcLength);
 void vec_insert_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, u32 p);
 void vec_insertarr_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, u32 p, const void* srcData, u32 srcLength);
-void vec_shrink_to_fit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize);
+void vec_shrinkToFit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize);
 
 
 
@@ -103,8 +103,8 @@ void vec_shrink_to_fit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize)
 
 
 
-#define vec_shrink_to_fit(a)\
-    vec_shrink_to_fit_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data))
+#define vec_shrinkToFit(a)\
+    vec_shrinkToFit_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data))
 
 
 
