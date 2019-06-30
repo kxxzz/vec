@@ -67,7 +67,7 @@ void vec_shrinkToFit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize);
 #define vec_push(a, e)\
     do {\
         vec_push_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data));\
-        memcpy((a)->data + (a)->length - 1, &(e), sizeof(*(a)->data));\
+        (a)->data[(a)->length - 1] = (e);\
     } while (0)
 
 
@@ -93,7 +93,7 @@ void vec_shrinkToFit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize);
 #define vec_insert(a, p, e)\
     do {\
         vec_insert_((void**)&(a)->data, &(a)->length, &(a)->capacity, sizeof(*(a)->data), (p)); \
-        memcpy((a)->data + (p), &(e), sizeof(*(a)->data));\
+        (a)->data[(p)] = (e);\
     } while (0)
 
 
