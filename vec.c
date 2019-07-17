@@ -95,7 +95,7 @@ void vec_insert_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, u32 p)
         *pCapacity = n;
     }
     char* t = (char*)*pData + p * elmSize;
-    memmove(t + elmSize, t, (*pLength - p) * elmSize);
+    memcpy(t + elmSize, t, (*pLength - p) * elmSize);
     ++*pLength;
 }
 
@@ -114,7 +114,7 @@ void vec_insertarr_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize, u32
         vec_realloc_(pData, *pCapacity*elmSize);
     }
     char* t = (char*)*pData + p * elmSize;
-    memmove(t + srcLength * elmSize, t, (*pLength - p) * elmSize);
+    memcpy(t + srcLength * elmSize, t, (*pLength - p) * elmSize);
     memcpy(t, srcData, srcLength*elmSize);
     *pLength += srcLength;
 }
