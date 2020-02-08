@@ -44,7 +44,7 @@ void vec_shrinkToFit_(void** pData, u32* pLength, u32* pCapacity, u32 elmSize);
 #define vec_t(T) struct { T* data; u32 length, capacity; }
 
 
-#define vec_free(a) (free((a)->data)) 
+#define vec_free(a) (free((void*)(a)->data)) 
 #define vec_clear(a) ((a)->length = 0)
 
 
